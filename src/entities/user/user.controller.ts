@@ -1,9 +1,8 @@
 import { Controller, Get, Post, Req, Res, Put, Patch, Delete, Param, ParseIntPipe, Body, UseInterceptors } from '@nestjs/common'
-import { FileInterceptor } from '@nestjs/platform-express'
 import { Response, Request } from 'express'
 
 import { UserService } from './user.service'
-// import { UpdateUserDto } from './dto/updateUser.dto'
+import { UpdateUserDto } from './dto/updateUser.dto'
 
 @Controller('users')
 export class UserController {
@@ -15,11 +14,11 @@ export class UserController {
   async getAllUsers(
     @Res() res: Response,
   ) {
-    // const users = await this.userService.getAllUsers()
+     const users = await this.userService.getAllUsers()
 
     return res.send({
       status: 'ok',
-      // data: users,
+      data: users,
     })
   }
 
@@ -37,7 +36,6 @@ export class UserController {
   }
 
   @Post('/')
-          // @UseInterceptors(FileInterceptor(''))
   async createUser(
     @Req() req: Request,
     @Res() res: Response,
@@ -50,10 +48,10 @@ export class UserController {
   @Put('/:id')
   async updateUser(
     @Param('id', ParseIntPipe) id: number,
-    // @Body() body: UpdateUserDto,
+    @Body() body: UpdateUserDto,
     @Res() res: Response,
   ) {
-    // this.userService.updateUserData(id, body)
+    await this.userService.updateUserData(id, body)
     return res.send({ status: 'ok' })
   }
 
@@ -62,7 +60,7 @@ export class UserController {
     @Param('id', ParseIntPipe) id: number,
     @Res() res: Response,
   ) {
-    // this.userService.deleteUser(id)
+    await this.userService.deleteUser(id)
     return res.send({ status: 'ok' })
   }
 }
