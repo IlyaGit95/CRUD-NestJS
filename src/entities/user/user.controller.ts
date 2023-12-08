@@ -79,7 +79,7 @@ export class UserController {
     type: User
   })
   @ApiResponse({ 
-    status: 404, 
+    status: 404,  
     description: 'User not Found.'
   })
   @ApiBody({ type: UpdateUserDto })
